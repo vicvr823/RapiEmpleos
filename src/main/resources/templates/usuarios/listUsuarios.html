@@ -1,0 +1,94 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>RapiEmpleos | Listado de Usuarios</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+     <header th:insert="fragmento/menu.html :: menu">
+    	<!-- aqui va el menu -->
+    </header>
+
+    <main role="main">     
+      <hr>
+      <div class="container"> 
+
+        <div class="card">
+          <h4 class="card-header"><strong>Listado de Usuarios</strong></h4>              
+          <div class="card-body">            
+            <hr>
+            <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+            <table class="table table-hover">
+              <thead class="thead-light">
+                <tr align="center">
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Username</th>                  
+                  <th scope="col">Email</th>
+                  <th scope="col">Estatus</th>
+                  <th scope="col">Operaciones</th>
+                  <th scope="col">Perfil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="usuario : ${usuarios}" align="center">
+                  <td th:text="${usuario.nombre}"></td>
+                  <td th:text="${usuario.username}"></td>                  
+                  <td th:text="${usuario.email}"></td>
+                  <td th:text="${usuario.estatus == 1 ? 'Activo' : 'Bloqueado' }"></td>
+                  <td>
+                  
+                    <a th:href="@{/usuarios/delete/{id} (id=${usuario.id}) }" onclick="return confirm('¿Estas seguro?')" class="btn btn-success btn-sm" role="button" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                 	
+                 	<span th:switch="${usuario.estatus}">                
+                      <a th:case="'1'" th:href="@{/usuarios/lock/{id} (id=${usuario.id}) }" onclick="return confirm('¿Quiere bloquear el acceso al usuario?')" class="btn btn-success btn-sm" role="button" title="Bloquear el acceso al sistema para este usuario."><i class="fas fa-lock" aria-hidden="true"></i></a>	
+					  <a th:case="'0'" th:href="@{/usuarios/unlock/{id} (id=${usuario.id}) }" onclick="return confirm('¿Desea desbloquear el usuario?')" class="btn btn-success btn-sm" role="button" title="Permitir el acceso al sistema a este usuario."><i class="fas fa-unlock" aria-hidden="true"></i></a>					   
+					</span>              
+                    
+				  </td>
+				  <td>
+				  	<a th:href="@{/usuarios/conceder/{id} (id=${usuario.id}) }" onclick="return confirm('¿Desea conceder privilegios al usuario?')" role="button" title="Cambio de perfil a EMPRESA">
+						<svg class="bi bi-arrow-up-circle-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="#61EC11" xmlns="http://www.w3.org/2000/svg" >
+						  <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-10.646.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z"/>
+						</svg>
+					</a>
+                    <a th:href="@{/usuarios/desconceder/{id} (id=${usuario.id}) }" onclick="return confirm('¿Desea desconceder privilegios al usuario?')" role="button" title="Cambio de perfil a POSTULANTE">
+                    	<svg class="bi bi-arrow-down-circle-fill"  width="2em" height="2em" viewBox="0 0 16 16" fill="#EF2D06" xmlns="http://www.w3.org/2000/svg">
+						  <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 5a.5.5 0 0 0-1 0v4.793L5.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.793V5z"/>
+						</svg>
+                    </a>					   
+				  </td>
+                </tr>                
+                               
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+      </div> <!-- /container -->
+
+    </main>
+
+    <footer th:insert="fragmento/autor.html :: autor-principal" class="footer">
+    	<!-- aqui va el autor -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>     
+  </body>
+</html>
