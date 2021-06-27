@@ -44,8 +44,19 @@
       <div class="container"> 
         <h2 class="font-weight-bold text-center text-capitalize">DESTACADOS</h2>
         <hr>
-        	lista de vacantes           
-		<hr>	
+        <div class="row" th:each="tempVacantes : ${vacante}">
+          <div class="col-md-3">            
+            <img class="rounded mx-auto d-block" th:src="@{/logos/{img} ( img = ${tempVacantes.imagen} ) }" alt="Generic placeholder image" width="220" height="220">            
+          </div>
+          <div class="col-md-9">
+            <h2 th:text="${tempVacantes.nombre}"></h2>
+            <h6 class="card-title" ><strong>Categoría: </strong> <span th:text="${tempVacantes.categoria.nombre}"></span></h6>
+            <h6 class="card-title"><strong>Publicado: <span th:text="${#dates.format(tempVacantes.fecha, 'dd-MM-yyyy')}"></span></strong></h6>                
+            <p>[[${tempVacantes.descripcion}]]</p>
+            <a class="btn btn-secondary" th:href="@{/vacantes/view/{id} (id=${tempVacantes.id}) }" >Ver detalle &raquo;</a>        
+          </div>
+        </div>           
+		  <hr>	
       </div> <!-- /container -->
 
     </main>
