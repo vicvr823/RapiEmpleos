@@ -1,2 +1,2 @@
 # RapiEmpleos
- Proyecto Casptone Project
+ Proyecto de universidad para el curso de Casptone Project
